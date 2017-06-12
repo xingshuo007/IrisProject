@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<style>
+		#editor{width: 600px;height: 400px;border: 1px solid #ccc}
+		h1{background: deeppink;padding: 12px;border-radius: 10px}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>心情随笔 <(￣3￣)></h1>
+		<h2>添加标题：<input type="text" id="title"></h2>
+		<div>
+			<button id='selbtn'>全选</button>
+			<button id='bold'>加粗</button>
+			<button id='italic'>倾斜</button>
+			<button id='ubtn'>下划线</button>
+			<button id='cobtn'>文字颜色</button>
+			<button id='lbtn'>左对齐</button>
+			<button id='cbtn'>居中对齐</button>
+			<button id='rbtn'>右对齐</button>
+			<button id='copbtn'>复制</button>
+			<button id='delbtn'>删除</button>
+			<button id='cutbtn'>剪切</button>
+			<button id='obtn'>删除线</button>
+		</div>
+		<h2>添加内容：</h2>
+		<div id='editor' contentEditable='true'></div>
+		<br>
+		<hr>
+		<button id="addBlog" class="btn btn-primary">发布内容</button>
+	</div>
+	
+	<script src="jquery.js"></script>
+	<script>
+		$('#bold').on('click',function(){
+			document.execCommand('Bold',false,null)
+		})
+		$('#italic').on('click',function(){
+			document.execCommand('italic',false,null)
+		})
+		$('#ubtn').on('click',function(){
+			document.execCommand('underline',false,null)
+		})
+		$('#cobtn').on('click',function(){
+			document.execCommand('ForeColor',false,'pink')
+		})
+		$('#lbtn').on('click',function(){
+			document.execCommand('justifyLeft',false,null)
+		})
+		$('#cbtn').on('click',function(){
+			document.execCommand('justifyCenter',false,null)
+		})
+		
+		$('#rbtn').on('click',function(){
+			document.execCommand('justifyRight',false,null)
+		})
+		$('#copbtn').on('click',function(){
+			document.execCommand('Copy',false,null)
+		})
+		$('#delbtn').on('click',function(){
+			document.execCommand('delete',false,null)
+		})
+		$('#selbtn').on('click',function(){
+			document.execCommand('selectAll',false,null)
+		})
+		$('#cutbtn').on('click',function(){
+			document.execCommand('Cut',false,null)
+		})
+		$('#obtn').on('click',function(){
+			document.execCommand('overline',false,null)
+		})
+		$('#addBlog').on('click',function(){
+			const title=$('#title').val();
+			const content=$('#editor').text();
+			if(title=='' || content==''){
+				alert('标题或内容不能为空')
+				return;
+			};
+			$.ajax({
+				url:'/release',
+				type:'post',
+				data:{title:title,content:content},
+				success:function(msg){
+					if(msg=='ok'){
+						window.location.href="http://localhost:8888"
+					}
+				}
+
+			})
+		})
+	</script>
+</body>
+</html>
