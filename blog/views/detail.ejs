@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+	<div id="detailContent" class="container">	
+	</div>
+	<script src="jquery.js"></script>
+	<script>
+		let NO=location.search.split('=')[1];
+		$.ajax({
+                url: '/details',
+                data: {NO:NO},
+                type:"post",
+                success: function (msg) {
+                    if (msg.length>0) {
+                    	$('#detailContent').append(`
+                			<h3>${msg[0].title}</h3>
+							<button id="back" class="btn btn-primary">返回首页</button>
+							
+							<hr />
+							<p>${msg[0].content}</p>
+							`);
+                        $('#back').on('click',function(){
+							window.location.href="http://localhost:8888"
+						})
+                    }else{
+                    	alert('暂无数据...')
+                    }
+                }
+            });
+
+	</script>
+</body>
+</html>

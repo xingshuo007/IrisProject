@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<style>
+		li{list-style: none;}
+		h2{color: pink}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="leaderboard">
+			<h2 class="well well-sm">彦小苏 <(￣3￣)> 个人博客</h2>
+			
+			<p>这个季节很干净，因为没有故事，没有你 <a href="add" class="btn btn-primary text-right" >添加新文章</a></p>
+			
+		</div>
+		<hr>
+		<div class="row">
+			<%for(let v of num){%>
+				<ul class="list-group col-lg-5">
+					<li class="list-group-item" style="background: skyblue"><span><%=v.NO%></span>.&nbsp;<span class="goDetail"><%=v.title%></span></li>
+				</ul>
+			<%}%>
+		</div>
+	</div>
+	<script src="jquery.js"></script>
+	<script>
+		$('.goDetail').on('click', function () {
+            let NO= $(this).prev().text()
+            $.ajax({
+                url: '/details',
+                data: {NO:NO},
+                type:"post",
+                success: function (msg) {
+                	//console.log(msg)
+                    if (msg.length>0) {
+                    	console.log(NO)
+                        window.location.href = "http://localhost:8888/detail?NO="+NO
+                    }else{
+                    	alert('暂无数据...')
+                    }
+                }
+            });
+        })
+	</script>
+</body>
+</html>
